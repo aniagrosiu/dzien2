@@ -29,3 +29,13 @@ fn usun_wpis(id_wpisu: usize){
         wpisy.borrow_mut().remove(id_wpisu)
     });
 }
+
+#[ic_cdk::update]
+fn edytuj_wpis(id_wpisu: usize, nowy_wpis: String){
+    WPISY.with(|wpisy: &RefCell<Vec<String>>| {
+        let mut binding: std::cell::RefMut<Vec<String>> = wpisy.borrow_mut();
+        let wpis = binding.get_mut(id_wpisu);
+        let stary_wpis = wpis.unwrap();
+        *stary_wpis = nowy_wpis;
+    });
+}
